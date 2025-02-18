@@ -50,8 +50,14 @@ const pAequorFactory = (num, baseArr) => {
       }
       return cgNum / this.dna.length >= 0.6;
     }, //survival
+    // method to display the DNA as a string
+    displayDNA() {
+      return this.dna.join("");
+    },
   };
 };
+
+/////////////
 
 // TestTask3
 function testPaequorFactory() {
@@ -65,9 +71,9 @@ function testPaequorFactory() {
 //TestTask4
 function testMutate() {
   const test1 = pAequorFactory(1, mockUpStrand());
-  console.log("Original : " + test1.dna.join(""));
+  console.log("Original : " + test1.displayDNA());
   test1.mutate();
-  console.log("Mutated : " + test1.dna.join(""));
+  console.log("Mutated : " + test1.displayDNA());
 }
 //testMutate();
 
@@ -75,8 +81,8 @@ function testMutate() {
 function testCompareDNA() {
   const test1 = pAequorFactory(1, mockUpStrand());
   const test2 = pAequorFactory(2, mockUpStrand());
-  console.log("Spec1: " + test1.dna.join(""));
-  console.log("Spec2: " + test2.dna.join(""));
+  console.log("Spec1: " + test1.displayDNA());
+  console.log("Spec2: " + test2.displayDNA());
   test1.compareDNA(test2);
 }
 //testCompareDNA();
@@ -84,7 +90,7 @@ function testCompareDNA() {
 //TestTask6
 function testSurvival() {
   const test1 = pAequorFactory(1, mockUpStrand());
-  console.log(test1.dna.join(""));
+  console.log(test1.displayDNA());
   console.log(test1.willLikelySurvive());
 }
 testSurvival();
