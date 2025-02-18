@@ -35,13 +35,21 @@ const pAequorFactory = (num, baseArr) => {
         }
       }
       const percentage = (common / this.dna.length) * 100;
-
       console.log(
         `Specimen#${this.specimenNum} and Specimen#${
           pAequor.specimenNum
         } have ${Math.floor(percentage)}% DNA in common`
       );
     }, //compare
+    willLikelySurvive() {
+      let cgNum = 0;
+      for (let i = 0; i < this.dna.length; i++) {
+        if (this.dna[i] === "C" || this.dna[i] === "G") {
+          cgNum++;
+        }
+      }
+      return cgNum / this.dna.length >= 0.6;
+    }, //survival
   };
 };
 
@@ -71,4 +79,12 @@ function testCompareDNA() {
   console.log("Spec2: " + test2.dna.join(""));
   test1.compareDNA(test2);
 }
-testCompareDNA();
+//testCompareDNA();
+
+//TestTask6
+function testSurvival() {
+  const test1 = pAequorFactory(1, mockUpStrand());
+  console.log(test1.dna.join(""));
+  console.log(test1.willLikelySurvive());
+}
+testSurvival();
