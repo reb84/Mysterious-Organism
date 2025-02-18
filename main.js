@@ -36,7 +36,7 @@ const pAequorFactory = (num, baseArr) => {
       }
       const percentage = (common / this.dna.length) * 100;
       console.log(
-        `Specimen#${this.specimenNum} and Specimen#${
+        `Specimen #${this.specimenNum} and Specimen #${
           pAequor.specimenNum
         } have ${Math.floor(percentage)}% DNA in common`
       );
@@ -57,27 +57,43 @@ const pAequorFactory = (num, baseArr) => {
   };
 };
 
+const studySurvivingSpecimens = () => {
+  const surviveInNature = [];
+  let count = 1;
+
+  // create 30 surviving specimens
+  while (surviveInNature.length < 30) {
+    const newSpecimen = pAequorFactory(count, mockUpStrand());
+    if (newSpecimen.willLikelySurvive()) {
+      surviveInNature.push(newSpecimen);
+    }
+    count++;
+  }
+
+  // log the surviving specimens and dna
+  surviveInNature.forEach((specimen) => {
+    console.log(
+      `Specimen #${specimen.specimenNum} DNA: ${specimen.displayDNA()}`
+    );
+  });
+};
+
 /////////////
 
-// TestTask3
 function testPaequorFactory() {
   const test1 = pAequorFactory(1, mockUpStrand());
   const test2 = pAequorFactory(2, mockUpStrand());
   console.log(test1);
   console.log(test2);
 }
-//testPaequorFactory();
 
-//TestTask4
 function testMutate() {
   const test1 = pAequorFactory(1, mockUpStrand());
   console.log("Original : " + test1.displayDNA());
   test1.mutate();
   console.log("Mutated : " + test1.displayDNA());
 }
-//testMutate();
 
-//TestTask5
 function testCompareDNA() {
   const test1 = pAequorFactory(1, mockUpStrand());
   const test2 = pAequorFactory(2, mockUpStrand());
@@ -85,12 +101,17 @@ function testCompareDNA() {
   console.log("Spec2: " + test2.displayDNA());
   test1.compareDNA(test2);
 }
-//testCompareDNA();
 
-//TestTask6
 function testSurvival() {
   const test1 = pAequorFactory(1, mockUpStrand());
   console.log(test1.displayDNA());
   console.log(test1.willLikelySurvive());
 }
-testSurvival();
+
+//testPaequorFactory();
+//testMutate();
+//testCompareDNA();
+//testSurvival();
+
+// generate and display surviving specimens
+studySurvivingSpecimens();
