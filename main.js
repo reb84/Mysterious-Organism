@@ -15,30 +15,60 @@ const mockUpStrand = () => {
 
 // console.log(mockUpStrand()); //will return DNA strand with 15 bases
 
-const pAequorFactory = (n, arr) => {
+const pAequorFactory = (num, baseArr) => {
   return {
-    specimenNum: n,
+    specimenNum: num,
     dna: mockUpStrand(),
     mutate() {
       const randomIndex = Math.floor(Math.random() * this.dna.length);
-      const currentBase = this.dna[randomIndex];
-
-      let newBase = returnRandBase();
-      // If the new base is the same as the current base, generate a new one
-      while (newBase === currentBase) {
-        newBase = returnRandBase();
+      const originalBase = this.dna[randomIndex];
+      while (this.dna[randomIndex] === originalBase) {
+        this.dna[randomIndex] = returnRandBase();
       }
-      // Update the DNA array by directly assigning the new base at the random index
-      this.dna[randomIndex] = newBase;
-
       return this.dna;
-    },
+    }, //mutate
+    compareDNA(pAequor) {
+      let common = 0;
+      for (let i = 0; i < this.dna.length; i++) {
+        if (this.dna[i] === pAequor.dna[i]) {
+          common++;
+        }
+      }
+      const percentage = (common / this.dna.length) * 100;
+
+      console.log(
+        `Specimen#${this.specimenNum} and Specimen#${
+          pAequor.specimenNum
+        } have ${Math.floor(percentage)}% DNA in common`
+      );
+    }, //compare
   };
 };
 
-// TestTask4
-const specimen1 = pAequorFactory(1);
-console.log("DNA:", specimen1.dna); // Original strand
+// TestTask3
+function testPaequorFactory() {
+  const test1 = pAequorFactory(1, mockUpStrand());
+  const test2 = pAequorFactory(2, mockUpStrand());
+  console.log(test1);
+  console.log(test2);
+}
+//testPaequorFactory();
 
-const mutatedDNA = specimen1.mutate();
-console.log("Mutation:", mutatedDNA); // Strand with one mutated base
+//TestTask4
+function testMutate() {
+  const test1 = pAequorFactory(1, mockUpStrand());
+  console.log("Original : " + test1.dna.join(""));
+  test1.mutate();
+  console.log("Mutated : " + test1.dna.join(""));
+}
+//testMutate();
+
+//TestTask5
+function testCompareDNA() {
+  const test1 = pAequorFactory(1, mockUpStrand());
+  const test2 = pAequorFactory(2, mockUpStrand());
+  console.log("Spec1: " + test1.dna.join(""));
+  console.log("Spec2: " + test2.dna.join(""));
+  test1.compareDNA(test2);
+}
+testCompareDNA();
