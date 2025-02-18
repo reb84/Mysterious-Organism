@@ -4,7 +4,7 @@ const returnRandBase = () => {
   return dnaBases[Math.floor(Math.random() * 4)];
 };
 
-// Returns a random single stand of DNA containing 15 bases
+// Returns a random single strand of DNA containing 15 bases
 const mockUpStrand = () => {
   const newStrand = [];
   for (let i = 0; i < 15; i++) {
@@ -19,7 +19,26 @@ const pAequorFactory = (n, arr) => {
   return {
     specimenNum: n,
     dna: mockUpStrand(),
+    mutate() {
+      const randomIndex = Math.floor(Math.random() * this.dna.length);
+      const currentBase = this.dna[randomIndex];
+
+      let newBase = returnRandBase();
+      // If the new base is the same as the current base, generate a new one
+      while (newBase === currentBase) {
+        newBase = returnRandBase();
+      }
+      // Update the DNA array by directly assigning the new base at the random index
+      this.dna[randomIndex] = newBase;
+
+      return this.dna;
+    },
   };
 };
 
-console.log(pAequorFactory(1, mockUpStrand())); //returns '1' and dna strand from mockUpStrand
+// TestTask4
+const specimen1 = pAequorFactory(1);
+console.log("DNA:", specimen1.dna); // Original strand
+
+const mutatedDNA = specimen1.mutate();
+console.log("Mutation:", mutatedDNA); // Strand with one mutated base
